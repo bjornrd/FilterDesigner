@@ -56,11 +56,6 @@ namespace sigproc {
         x /= x.size();
     }
 
-    // E.g:
-
-
-
-
 }
 
 #endif // SIGPROC_H

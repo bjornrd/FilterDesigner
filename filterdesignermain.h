@@ -2,12 +2,15 @@
 #define FILTERDESIGNERMAIN_H
 
 #include <QMainWindow>
+#include <QDockWidget>
 
+#include "filteranalyzer.h"
 #include "filterdesigner.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class FilterDesignerMain; }
 QT_END_NAMESPACE
+
 
 class FilterDesignerMain : public QMainWindow
 {
@@ -18,10 +21,16 @@ public:
     ~FilterDesignerMain();
 
 private:
-    Ui::FilterDesignerMain *ui;
+    void setDarkUI();
+    void setTabbarStyleSheet();
+    void setUpTools();
     void mainAppSetup();
 
+private:
+    Ui::FilterDesignerMain *ui;
+
     FilterDesigner* _filterDesigner;
-    void setUpTools();
+    FilterAnalyzer* _filterAnalyzer;
+
 };
 #endif // FILTERDESIGNERMAIN_H
