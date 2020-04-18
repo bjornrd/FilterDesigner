@@ -1,4 +1,4 @@
-QT       += core gui charts testlib
+QT       += core gui charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -24,7 +24,6 @@ SOURCES += \
     src/filterdesigner.cpp \
     src/main.cpp \
     src/filterdesignermain.cpp \
-    tests/test_fft.cpp
 
 
 HEADERS += \
@@ -34,7 +33,6 @@ HEADERS += \
     include/filterdesignermain.h \
     include/sigproc.h \
     include/lowpassfilter.h \
-    tests/test_fft.h
 
 FORMS += \
     forms/filteranalyzer.ui \
