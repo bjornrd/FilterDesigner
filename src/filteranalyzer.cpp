@@ -40,7 +40,8 @@ void FilterAnalyzer::setStyleSheets()
                                             "min-height: 40px;"
                                     "}"
 
-                                    "QPushButton:hover {background: #5E5F60;}";
+                                    "QPushButton:hover {background: #5E5F60;}"
+                                    "QPushButton:focus {background: #5E5F60;}";
 
 
     ui->coef_pushButton ->setStyleSheet(pushButtonStyleSheet);
