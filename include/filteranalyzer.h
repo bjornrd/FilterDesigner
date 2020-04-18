@@ -8,6 +8,16 @@
 
 #include "sigproc.h"
 
+/*
+ * TODO: Axis for Coefficients
+ * TODO: Axis for the Magnitude response
+ * TODO: Axis for the Phase response
+ * TODO: Step response
+ * TODO: Impulse response
+ *
+ *
+ */
+
 namespace Ui {
 class FilterAnalyzer;
 }

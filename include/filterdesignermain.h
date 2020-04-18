@@ -7,6 +7,21 @@
 #include "filteranalyzer.h"
 #include "filterdesigner.h"
 
+/*  PRIMARY TO-DO LIST
+ *
+ * TODO: List filter types
+ * TODO: List filter design methods (equiripple, windowed, least-squared...)
+ * TODO: Create window design class [hamming, hann, kaizers, bartlett]
+ * TODO: Biquad filter banks, for IIR filter implementation
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class FilterDesignerMain; }
 QT_END_NAMESPACE

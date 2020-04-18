@@ -1,4 +1,4 @@
-QT       += core gui charts
+QT       += core gui charts testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,17 +18,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH = include/
 
 SOURCES += \
+    src/filter.cpp \
+    src/lowpassfilter.cpp \
     src/filteranalyzer.cpp \
     src/filterdesigner.cpp \
     src/main.cpp \
-    src/filterdesignermain.cpp\
+    src/filterdesignermain.cpp \
+    tests/test_fft.cpp
 
 
 HEADERS += \
+    include/filter.h \
     include/filteranalyzer.h \
     include/filterdesigner.h \
     include/filterdesignermain.h \
-    include/sigproc.h\
+    include/sigproc.h \
+    include/lowpassfilter.h \
+    tests/test_fft.h
 
 FORMS += \
     forms/filteranalyzer.ui \
@@ -40,4 +46,5 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DISTFILES +=
+DISTFILES += \
+    python/fft_test.py
