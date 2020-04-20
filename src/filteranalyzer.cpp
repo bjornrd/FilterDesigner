@@ -37,12 +37,12 @@ void FilterAnalyzer::setStyleSheets()
 {
     QString pushButtonStyleSheet = "QPushButton{"
                                             "border-top: 4px;"
-                                            "border-radius: 1px;"
+//                                            "border-radius: 1px;"
                                             "min-width: 6em;"
                                             "min-height: 2em;"
                                     "}"
 
-                                    "QPushButton:hover {background: #5E5F60;}"
+                                    "QPushButton:hover {background: #484852;}"
                                     "QPushButton:focus {background: #2A2A32;"
                                     "                   border-top: 3px solid #7A7A84; "
                                     "                   border-radius: 0px;};";

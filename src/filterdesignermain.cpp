@@ -98,7 +98,6 @@ void FilterDesignerMain::setTabbarStyleSheet()
         "border-bottom-color: #1C1C1C;" /* same as the pane color */
         "min-width: 4em;"
         "min-height: 1.3em;"
-        "padding: 1px;"
     "}"
     );
 
