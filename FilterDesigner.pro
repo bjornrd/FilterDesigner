@@ -24,7 +24,7 @@ SOURCES += \
     src/filteranalyzer.cpp \
     src/filterdesigner.cpp \
     src/main.cpp \
-    src/filterdesignermain.cpp \ \
+    src/filterdesignermain.cpp \
     src/windowdesigner.cpp
 
 
@@ -35,7 +35,7 @@ HEADERS += \
     include/filterdesigner.h \
     include/filterdesignermain.h \
     include/sigproc.h \
-    include/lowpassfilter.h \ \
+    include/lowpassfilter.h \
     include/windowdesigner.h
 
 FORMS += \
