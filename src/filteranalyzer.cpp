@@ -18,6 +18,8 @@ FilterAnalyzer::FilterAnalyzer(QWidget *parent) :
 
     ui->analysis_chartView->setChart(_filterCoefChart);
 
+
+
 }
 
 FilterAnalyzer::~FilterAnalyzer()
@@ -53,38 +55,72 @@ void FilterAnalyzer::setStyleSheets()
 
 void FilterAnalyzer::setUpCharts()
 {
+
+    // Coefficients
+    // -----------------------------------------
     _filterCoef     = new QLineSeries();
     _filterCoefChart= new QChart();
     _filterCoefChart->setTheme(QChart::ChartThemeDark);
 
+    _coefXAxis = new QValueAxis();
+    _coefYAxis = new QValueAxis();
+
+    _filterCoefChart->addAxis(_coefXAxis, Qt::AlignBottom);
+    _filterCoefChart->addAxis(_coefYAxis, Qt::AlignLeft);
+
+
+    // Magnitude
+    // -----------------------------------------
     _freqMagVals    = new QLineSeries();
     _freqMagChart   = new QChart();
     _freqMagChart->setTheme(QChart::ChartThemeDark);
 
+    // Phase
+    // -----------------------------------------
     _freqPhaseVals  = new QLineSeries();
     _freqPhaseChart = new QChart();
     _freqPhaseChart->setTheme(QChart::ChartThemeDark);
 
 
+
+    // Misc.
+    // -----------------------------------------
     _filterCoefChart->legend()->hide();
     _freqMagChart   ->legend()->hide();
     _freqPhaseChart ->legend()->hide();
+
+
 }
 
 void FilterAnalyzer::on_coef_pushButton_clicked()
 {
     ui->analysis_chartView->setChart(_filterCoefChart);
 
+
     //----------------------
     // For experimental purposes
     _filterCoef->clear();
 
+
     int i=0;
-    for(auto elem:_filterCoefNum)
+
+    double ymin = 0, ymax = 0;
+    for(const auto& elem:_filterCoefNum)
     {
-        _filterCoef->append(i, elem.real());
+        auto er = elem.real();
+        _filterCoef->append(i, er);
         i++;
+
+        ymax = er > ymax ? er : ymax;
+        ymin = er < ymin ? er : ymin;
     }
+
+    _coefXAxis->setRange(1, _filterCoef->count());
+    _coefXAxis ->setTickCount(_filterCoef->count());
+    _coefXAxis->setLabelFormat("%i");
+
+    _coefYAxis->setRange(ymin, ymax);
+
 
     //----------------------
 
@@ -92,7 +128,6 @@ void FilterAnalyzer::on_coef_pushButton_clicked()
     if(_filterCoefChart->series().size() == 0)
         _filterCoefChart->addSeries(_filterCoef);
 
-    _filterCoefChart->createDefaultAxes();
 }
 
 void FilterAnalyzer::on_mag_pushButton_clicked()
