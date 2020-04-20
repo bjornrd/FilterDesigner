@@ -1,9 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
  <class>FilterTab</class>
- <widget name="FilterTab" class="QWidget">
+ <widget class="QWidget" name="FilterTab">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,7 +13,55 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="filter_tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="FilterDesigner" name="Design_tab">
+      <attribute name="title">
+       <string>Design</string>
+      </attribute>
+     </widget>
+     <widget class="FilterAnalyzer" name="Analysis_tab">
+      <attribute name="title">
+       <string>Analysis</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
- <pixmapfunction/>
+ <customwidgets>
+  <customwidget>
+   <class>FilterDesigner</class>
+   <extends>QWidget</extends>
+   <header>filterdesigner.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>FilterAnalyzer</class>
+   <extends>QWidget</extends>
+   <header>filteranalyzer.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>

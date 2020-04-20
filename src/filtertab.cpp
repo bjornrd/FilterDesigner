@@ -12,3 +12,13 @@ FilterTab::~FilterTab()
 {
     delete ui;
 }
+
+FilterDesigner* FilterTab::designer()
+{
+    return ui->Design_tab;
+}
+
+FilterAnalyzer* FilterTab::analyzer()
+{
+    return ui->Analysis_tab;
+}
