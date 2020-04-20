@@ -34,14 +34,16 @@ void FilterAnalyzer::updateCoefficients(sigproc::CArray coefNum, sigproc::CArray
 void FilterAnalyzer::setStyleSheets()
 {
     QString pushButtonStyleSheet = "QPushButton{"
-                                            "border: 0px;"
-                                            "border-radius: 0px;"
+                                            "border-top: 4px;"
+                                            "border-radius: 1px;"
                                             "min-width: 80px;"
                                             "min-height: 40px;"
                                     "}"
 
                                     "QPushButton:hover {background: #5E5F60;}"
-                                    "QPushButton:focus {background: #5E5F60;}";
+                                    "QPushButton:focus {background: #2A2A32;"
+                                    "                   border-top: 3px solid #7A7A84; "
+                                    "                   border-radius: 0px;};";
 
 
     ui->coef_pushButton ->setStyleSheet(pushButtonStyleSheet);
@@ -72,7 +74,6 @@ void FilterAnalyzer::setUpCharts()
 void FilterAnalyzer::on_coef_pushButton_clicked()
 {
     ui->analysis_chartView->setChart(_filterCoefChart);
-    ui->currentPane_label->setText("[" + ui->coef_pushButton->text() + "]");
 
     //----------------------
     // For experimental purposes
@@ -97,7 +98,6 @@ void FilterAnalyzer::on_coef_pushButton_clicked()
 void FilterAnalyzer::on_mag_pushButton_clicked()
 {
     ui->analysis_chartView->setChart(_freqMagChart);
-    ui->currentPane_label->setText("[" + ui->mag_pushButton->text() + "]");
 
     //----------------------
     // Add the values we want to the series
@@ -132,7 +132,6 @@ void FilterAnalyzer::on_mag_pushButton_clicked()
 void FilterAnalyzer::on_phase_pushButton_clicked()
 {
     ui->analysis_chartView->setChart(_freqPhaseChart);
-    ui->currentPane_label->setText("[" + ui->phase_pushButton->text() + "]");
 
     //----------------------
     // Add the values we want to the series
