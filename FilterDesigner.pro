@@ -18,25 +18,25 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH = include/
 
 SOURCES += \
-    src/windowfir.cpp \
     src/filtertab.cpp \
     src/filter.cpp \
     src/lowpassfilter.cpp \
     src/filteranalyzer.cpp \
     src/filterdesigner.cpp \
     src/main.cpp \
-    src/filterdesignermain.cpp \
+    src/filterdesignermain.cpp \ \
+    src/windowdesigner.cpp
 
 
 HEADERS += \
-    include/windowfir.h \
     include/filtertab.h \
     include/filter.h \
     include/filteranalyzer.h \
     include/filterdesigner.h \
     include/filterdesignermain.h \
     include/sigproc.h \
-    include/lowpassfilter.h \
+    include/lowpassfilter.h \ \
+    include/windowdesigner.h
 
 FORMS += \
     forms/filtertab.ui \

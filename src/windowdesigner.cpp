@@ -5,20 +5,20 @@
  * 20/04/2020/4/2020
  * me_brd@hotmail.com
  ****************************************************************************/
-#include "WindowFIR.h"
+#include "windowdesigner.h"
 
-WindowFIR::WindowFIR() :
+WindowDesigner::WindowDesigner() :
     _kaizerAlpha(0.5)
 {
 
 }
 
-WindowFIR::~WindowFIR()
+WindowDesigner::~WindowDesigner()
 {
 
 }
 
-void WindowFIR::designWindow(WindowType type, uint windowLength)
+void WindowDesigner::designWindow(WindowType type, uint windowLength)
 {
     switch (type) {
         case WindowType::Rect:
@@ -44,7 +44,7 @@ void WindowFIR::designWindow(WindowType type, uint windowLength)
 
 }
 
-void WindowFIR::designRectWindow(uint windowLength)
+void WindowDesigner::designRectWindow(uint windowLength)
 {
     _windowCoefficients.clear();
     _windowCoefficients.reserve(windowLength);
@@ -54,7 +54,7 @@ void WindowFIR::designRectWindow(uint windowLength)
 
 }
 
-void WindowFIR::designHammingWindow(uint windowLength)
+void WindowDesigner::designHammingWindow(uint windowLength)
 {
     _windowCoefficients.clear();
     _windowCoefficients.reserve(windowLength);
@@ -66,7 +66,7 @@ void WindowFIR::designHammingWindow(uint windowLength)
         _windowCoefficients.push_back( 1.0*(alpha - beta*cos(2*sigproc::PI*i/(windowLength-1))) );
 }
 
-void WindowFIR::designHannWindow(uint windowLength)
+void WindowDesigner::designHannWindow(uint windowLength)
 {
     _windowCoefficients.clear();
     _windowCoefficients.reserve(windowLength);
@@ -75,7 +75,7 @@ void WindowFIR::designHannWindow(uint windowLength)
             _windowCoefficients.push_back( 0.5 - 0.5*cos(2*sigproc::PI*i/(windowLength-1)) );
 }
 
-void WindowFIR::designKaiserWindow(uint windowLength, double alpha)
+void WindowDesigner::designKaiserWindow(uint windowLength, double alpha)
 {
     _windowCoefficients.clear();
     _windowCoefficients.reserve(windowLength);
@@ -94,7 +94,7 @@ void WindowFIR::designKaiserWindow(uint windowLength, double alpha)
     std::string a = WindowTypesLiteral::Types[static_cast<int>(WindowType::Hann)];
 }
 
-void WindowFIR::designBlackmanWindow(uint windowLength)
+void WindowDesigner::designBlackmanWindow(uint windowLength)
 {
     _windowCoefficients.clear();
     _windowCoefficients.reserve(windowLength);
@@ -110,7 +110,7 @@ void WindowFIR::designBlackmanWindow(uint windowLength)
     }
 }
 
-double WindowFIR::bessel(double x, uint windowLength)
+double WindowDesigner::bessel(double x, uint windowLength)
 {
     double fact1        = 0;
     double besselOutput = 0;
@@ -123,7 +123,7 @@ double WindowFIR::bessel(double x, uint windowLength)
     return besselOutput;
 }
 
-double WindowFIR::factorial(double n)
+double WindowDesigner::factorial(double n)
 {
     double factorialOutput=1;
     for(int i=1; i<n+1; i++)
@@ -132,22 +132,18 @@ double WindowFIR::factorial(double n)
     return factorialOutput;
 }
 
-double WindowFIR::kaizerAlpha() const
+double WindowDesigner::kaizerAlpha() const
 {
     return _kaizerAlpha;
 }
 
-void WindowFIR::setKaizerAlpha(double kaizerAlpha)
+void WindowDesigner::setKaizerAlpha(double kaizerAlpha)
 {
     _kaizerAlpha = kaizerAlpha;
 }
 
-std::vector<double> WindowFIR::windowCoefficients() const
+std::vector<double> WindowDesigner::windowCoefficients() const
 {
     return _windowCoefficients;
 }
 
-std::vector<double> WindowFIR::filterCoefficients() const
-{
-    return _filterCoefficients;
-}

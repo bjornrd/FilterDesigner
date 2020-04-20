@@ -50,15 +50,14 @@ const std::vector<std::string>  WindowTypesLiteral::Types{WindowTypesLiteral::Re
 
 
 
-class WindowFIR
+class WindowDesigner
 {
     public:
-        WindowFIR();
-        ~WindowFIR();
+        WindowDesigner();
+        ~WindowDesigner();
 
         void designWindow(WindowType type, uint windowLength);
 
-        std::vector<double> filterCoefficients() const;
         std::vector<double> windowCoefficients() const;
 
         double kaizerAlpha() const;
@@ -75,7 +74,6 @@ class WindowFIR
         double factorial(double n);
 
     private:
-        std::vector<double> _filterCoefficients;
         std::vector<double> _windowCoefficients;
 
         double _kaizerAlpha;
