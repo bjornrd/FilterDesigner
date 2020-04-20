@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH = include/
 
 SOURCES += \
-    WindowFIR.cpp \
+    src/windowfir.cpp \
     src/filtertab.cpp \
     src/filter.cpp \
     src/lowpassfilter.cpp \
@@ -29,7 +29,7 @@ SOURCES += \
 
 
 HEADERS += \
-    WindowFIR.h \
+    include/windowfir.h \
     include/filtertab.h \
     include/filter.h \
     include/filteranalyzer.h \
