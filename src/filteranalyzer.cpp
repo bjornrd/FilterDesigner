@@ -37,7 +37,6 @@ void FilterAnalyzer::setStyleSheets()
 {
     QString pushButtonStyleSheet = "QPushButton{"
                                             "border-top: 4px;"
-//                                            "border-radius: 1px;"
                                             "min-width: 6em;"
                                             "min-height: 2em;"
                                     "}"
