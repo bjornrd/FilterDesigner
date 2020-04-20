@@ -54,6 +54,8 @@ void FilterDesignerMain::setDarkUI()
     darkPalette.setColor(                    QPalette::ToolTipText,     ActiveTextColor);
     darkPalette.setColor(                    QPalette::Window,          QColor(24,24,24));
     darkPalette.setColor(                    QPalette::WindowText,      ActiveTextColor);
+    darkPalette.setColor(                    QPalette::Highlight,       QColor(42, 130, 218));
+    darkPalette.setColor(                    QPalette::HighlightedText, Qt::black);
 
     // Disabled
     darkPalette.setColor(QPalette::Disabled, QPalette::AlternateBase,   QColor(25,23,23));
@@ -68,8 +70,7 @@ void FilterDesignerMain::setDarkUI()
     darkPalette.setColor(QPalette::Disabled, QPalette::Window,          QColor(20,20,20));
     darkPalette.setColor(QPalette::Disabled, QPalette::WindowText,      DisabledTextColor);
 
-    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
-    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+
 
     qApp->setPalette(darkPalette);
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
@@ -112,6 +113,9 @@ void FilterDesignerMain::on_actionNew_Filter_triggered()
     ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
 
     ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
+
+//    auto p = static_cast<FilterTab*>(ui->main_TabWidget->widget(0));
+//    FilterAnalyzer* a = p->analyzer();
 }
 
 void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
@@ -136,4 +140,9 @@ void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
 
     if(ok)
         ui->main_TabWidget->setTabText(index, text);
+}
+
+void FilterDesignerMain::on_actionExit_triggered()
+{
+    this->close();
 }

@@ -39,10 +39,9 @@ public:
 
 private slots:
     void on_actionNew_Filter_triggered();
-
     void on_main_TabWidget_tabCloseRequested(int index);
-
     void on_main_TabWidget_tabBarDoubleClicked(int index);
+    void on_actionExit_triggered();
 
 private:
     void setDarkUI();
