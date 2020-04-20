@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 INCLUDEPATH = include/
 
 SOURCES += \
+    src/filtertab.cpp \
     src/filter.cpp \
     src/lowpassfilter.cpp \
     src/filteranalyzer.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 
 
 HEADERS += \
+    include/filtertab.h \
     include/filter.h \
     include/filteranalyzer.h \
     include/filterdesigner.h \
@@ -35,6 +37,7 @@ HEADERS += \
     include/lowpassfilter.h \
 
 FORMS += \
+    forms/filtertab.ui \
     forms/filteranalyzer.ui \
     forms/filterdesigner.ui \
     forms/filterdesignermain.ui
