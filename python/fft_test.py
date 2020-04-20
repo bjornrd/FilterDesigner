@@ -14,13 +14,13 @@ if __name__ == "__main__":
     print(a)
     print(b)
 
-    d = np.sqrt(b.real*b.real + b.imag*b.imag)
-    e = np.arctan2(b.imag,b.real);
+    mag     = np.sqrt(b.real*b.real + b.imag*b.imag)
+    phase   = np.arctan2(b.imag,b.real);
 
     plt.plot(b)
     plt.plot(c)
-    plt.plot(d)
-    plt.plot(e)
+    plt.plot(mag)
+    plt.plot(phase)
     plt.legend(['fft', 'ifft', 'fft.magnitude', 'fft.phase'])
     plt.grid()
     plt.show()
