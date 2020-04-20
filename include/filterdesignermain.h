@@ -3,9 +3,11 @@
 
 #include <QMainWindow>
 #include <QDockWidget>
+#include <QString>
 
 #include "filteranalyzer.h"
 #include "filterdesigner.h"
+#include "filtertab.h"
 
 /*  PRIMARY TO-DO LIST
  *
@@ -35,17 +37,19 @@ public:
     FilterDesignerMain(QWidget *parent = nullptr);
     ~FilterDesignerMain();
 
+private slots:
+    void on_actionNew_Filter_triggered();
+
+    void on_main_TabWidget_tabCloseRequested(int index);
+
+    void on_main_TabWidget_tabBarDoubleClicked(int index);
+
 private:
     void setDarkUI();
     void setTabbarStyleSheet();
-    void setUpTools();
     void mainAppSetup();
 
 private:
     Ui::FilterDesignerMain *ui;
-
-    FilterDesigner* _filterDesigner;
-    FilterAnalyzer* _filterAnalyzer;
-
 };
 #endif // FILTERDESIGNERMAIN_H

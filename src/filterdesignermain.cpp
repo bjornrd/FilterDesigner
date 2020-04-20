@@ -2,7 +2,8 @@
 #include "ui_filterdesignermain.h"
 
 #include <QStyleFactory>
-
+#include <QInputDialog>
+#include <QMessageBox>
 
 FilterDesignerMain::FilterDesignerMain(QWidget *parent)
     : QMainWindow(parent)
@@ -10,26 +11,27 @@ FilterDesignerMain::FilterDesignerMain(QWidget *parent)
 {
     ui->setupUi(this);
 
-
+    // Remove the two dud-tabs that are created by the designer
+    delete(ui->main_TabWidget->widget(1));
+    delete(ui->main_TabWidget->widget(0));
 
     // Main Application setup
     mainAppSetup();
 
-    // Set up tools
-    setUpTools();
-
     // Set up tab-bar stylesheet
     setTabbarStyleSheet();
-
-    // Add the Design- and Analysis- tabs
-    ui->Design_tab  ->layout()->addWidget(_filterDesigner);
-    ui->Analysis_tab->layout()->addWidget(_filterAnalyzer);
 
 }
 
 FilterDesignerMain::~FilterDesignerMain()
 {
     delete ui;
+}
+
+void FilterDesignerMain::mainAppSetup()
+{
+    this->setWindowTitle("Filter Designer");
+    setDarkUI();
 }
 
 void FilterDesignerMain::setDarkUI()
@@ -71,51 +73,67 @@ void FilterDesignerMain::setDarkUI()
 
     qApp->setPalette(darkPalette);
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
-
-
-    // Make sure the tabs also are affected by the palette
-    ui->Analysis_tab->setAutoFillBackground(true);
-    ui->Design_tab->setAutoFillBackground(true);
 }
 
 void FilterDesignerMain::setTabbarStyleSheet()
 {
     QString tabbarStyleSheet =
-                                "QTabWidget::pane {" /* The tab widget frame */
-                                    "border-top: 2px solid #C2C7CB;"
-                                "}"
+    (
+    "QTabWidget::pane {" /* The tab widget frame */
+        "border-top: 2px solid #C2C7CB;"
+    "}"
 
-                                "QTabBar::tab::hover{"
-                                "background: #5E5F60"
-                                "}"
+    "QTabBar::tab::hover{"
+    "background: #484852"
+    "}"
 
-                                "QTabBar::tab::selected{"
-                                    "background: #5E5F60"
-                                "}"
+    "QTabBar::tab::selected{"
+        "background: #484852"
+    "}"
 
-                                "QTabBar::tab {"
-                                    "background: #1C1C1C;"
-                                    "border: 1px solid #1C1C1C;"
-                                    "border-bottom-color: #1C1C1C;" /* same as the pane color */
-                                    "min-width: 8ex;"
-                                    "min-height: 8ex;"
-                                    "padding: 2px;"
-                                "}";
+    "QTabBar::tab {"
+        "background: #1C1C1C;"
+        "border: 1px solid #1C1C1C;"
+        "border-bottom-color: #1C1C1C;" /* same as the pane color */
+        "min-width: 8ex;"
+        "min-height: 6ex;"
+        "padding: 1px;"
+    "}"
+    );
 
-    ui->mainTabWidget->setStyleSheet(tabbarStyleSheet);
+
+    ui->main_TabWidget->setStyleSheet(tabbarStyleSheet);
 }
 
-void FilterDesignerMain::mainAppSetup()
+
+
+void FilterDesignerMain::on_actionNew_Filter_triggered()
 {
-    this->setWindowTitle("Filter Designer");
+    ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
 
-
-    setDarkUI();
-
+    ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
 }
 
-void FilterDesignerMain::setUpTools()
+void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
 {
-    _filterDesigner = new FilterDesigner();
-    _filterAnalyzer = new FilterAnalyzer();
+    QMessageBox msgBox;
+    msgBox.setText("Are you sure you want to close the tab: "  + ui->main_TabWidget->tabText(index) + " ?");
+    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Cancel);
+
+    int ret = msgBox.exec();
+
+    if(ret == QMessageBox::Ok)
+        delete(ui->main_TabWidget->widget(index));
+}
+
+void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Tab label"),
+                                         tr("New Tab Label:"), QLineEdit::Normal,
+                                         "Filter / Window", &ok);
+
+    if(ok)
+        ui->main_TabWidget->setTabText(index, text);
 }
