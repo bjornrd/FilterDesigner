@@ -24,59 +24,49 @@ enum class WindowType
 class WindowTypesLiteral
 {
     public:
-        const static std::string Rectangular;
-        const static std::string Hamming;
-        const static std::string Hann;
-        const static std::string Kaiser;
-        const static std::string Blackman;
+        const static inline std::string Rectangular = "Rectangular";
+        const static inline std::string Hamming = "Hamming";
+        const static inline std::string Hann = "Hann";
+        const static inline std::string Kaiser = "Kaiser";
+        const static inline std::string Blackman = "Blackman";
 
-        const static std::vector<std::string> Types;
+        const static inline std::vector<std::string> Types{WindowTypesLiteral::Rectangular,
+                                                           WindowTypesLiteral::Hamming,
+                                                           WindowTypesLiteral::Hann,
+                                                           WindowTypesLiteral::Kaiser,
+                                                           WindowTypesLiteral::Blackman};
 
     private:
         WindowTypesLiteral(){} // Disallow creating an instance of this object
 };
 
-const std::string WindowTypesLiteral::Rectangular  = "Rectangular";
-const std::string WindowTypesLiteral::Hamming      = "Hamming";
-const std::string WindowTypesLiteral::Hann         = "Hann";
-const std::string WindowTypesLiteral::Kaiser       = "Kaiser";
-const std::string WindowTypesLiteral::Blackman     = "Blackman";
-
-const std::vector<std::string>  WindowTypesLiteral::Types{WindowTypesLiteral::Rectangular,
-                                                          WindowTypesLiteral::Hamming,
-                                                          WindowTypesLiteral::Hann,
-                                                          WindowTypesLiteral::Kaiser,
-                                                          WindowTypesLiteral::Blackman};
-
-
-
 class WindowDesigner
 {
     public:
-        WindowDesigner();
-        ~WindowDesigner();
 
-        void designWindow(WindowType type, uint windowLength);
 
-        std::vector<double> windowCoefficients() const;
+        static std::vector<double> designWindow(WindowType type, uint windowLength);
 
-        double kaizerAlpha() const;
-        void setKaizerAlpha(double kaizerAlpha);
+        static std::vector<double> windowCoefficients();
 
-    private:
-        void designRectWindow(      uint windowLength               );
-        void designHammingWindow(   uint windowLength               );
-        void designHannWindow(      uint windowLength               );
-        void designKaiserWindow(    uint windowLength, double alpha );
-        void designBlackmanWindow(  uint windowLength               );
-
-        double bessel(double x, uint windowLength);
-        double factorial(double n);
+        static double kaizerAlpha();
+        static void setKaizerAlpha(double kaizerAlpha);
 
     private:
-        std::vector<double> _windowCoefficients;
+        WindowDesigner() {}
 
-        double _kaizerAlpha;
+        static void designRectWindow(      uint windowLength               );
+        static void designHammingWindow(   uint windowLength               );
+        static void designHannWindow(      uint windowLength               );
+        static void designKaiserWindow(    uint windowLength, double alpha );
+        static void designBlackmanWindow(  uint windowLength               );
+
+        static double bessel(double x, uint windowLength);
+        static double factorial(double n);
+
+    private:
+        static inline std::vector<double> _windowCoefficients;
+        static inline double _kaizerAlpha = 0.5;
 
 };
 

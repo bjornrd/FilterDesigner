@@ -7,18 +7,7 @@
  ****************************************************************************/
 #include "windowdesigner.h"
 
-WindowDesigner::WindowDesigner() :
-    _kaizerAlpha(0.5)
-{
-
-}
-
-WindowDesigner::~WindowDesigner()
-{
-
-}
-
-void WindowDesigner::designWindow(WindowType type, uint windowLength)
+std::vector<double> WindowDesigner::designWindow(WindowType type, uint windowLength)
 {
     switch (type) {
         case WindowType::Rect:
@@ -41,6 +30,8 @@ void WindowDesigner::designWindow(WindowType type, uint windowLength)
             designBlackmanWindow(windowLength);
         break;
     }
+
+    return WindowDesigner::windowCoefficients();
 
 }
 
@@ -91,7 +82,7 @@ void WindowDesigner::designKaiserWindow(uint windowLength, double alpha)
         _windowCoefficients.push_back(besselNom/besselDenom);
     }
 
-    std::string a = WindowTypesLiteral::Types[static_cast<int>(WindowType::Hann)];
+    std::string a = WindowTypesLiteral::Hann;
 }
 
 void WindowDesigner::designBlackmanWindow(uint windowLength)
@@ -132,7 +123,7 @@ double WindowDesigner::factorial(double n)
     return factorialOutput;
 }
 
-double WindowDesigner::kaizerAlpha() const
+double WindowDesigner::kaizerAlpha()
 {
     return _kaizerAlpha;
 }
@@ -142,7 +133,7 @@ void WindowDesigner::setKaizerAlpha(double kaizerAlpha)
     _kaizerAlpha = kaizerAlpha;
 }
 
-std::vector<double> WindowDesigner::windowCoefficients() const
+std::vector<double> WindowDesigner::windowCoefficients()
 {
     return _windowCoefficients;
 }
