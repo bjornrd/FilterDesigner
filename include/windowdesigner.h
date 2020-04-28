@@ -25,10 +25,10 @@ class WindowTypesLiteral
 {
     public:
         const static inline std::string Rectangular = "Rectangular";
-        const static inline std::string Hamming = "Hamming";
-        const static inline std::string Hann = "Hann";
-        const static inline std::string Kaiser = "Kaiser";
-        const static inline std::string Blackman = "Blackman";
+        const static inline std::string Hamming     = "Hamming";
+        const static inline std::string Hann        = "Hann";
+        const static inline std::string Kaiser      = "Kaiser";
+        const static inline std::string Blackman    = "Blackman";
 
         const static inline std::vector<std::string> Types{WindowTypesLiteral::Rectangular,
                                                            WindowTypesLiteral::Hamming,
@@ -43,8 +43,6 @@ class WindowTypesLiteral
 class WindowDesigner
 {
     public:
-
-
         static std::vector<double> designWindow(WindowType type, uint windowLength);
 
         static std::vector<double> windowCoefficients();
