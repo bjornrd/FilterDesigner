@@ -42,8 +42,9 @@ private slots:
     void on_main_TabWidget_tabCloseRequested(int index);
     void on_main_TabWidget_tabBarDoubleClicked(int index);
     void on_actionExit_triggered();
+    void on_newFilter_pushButton_clicked();
 
-private:
+    private:
     void setDarkUI();
     void setTabbarStyleSheet();
     void mainAppSetup();

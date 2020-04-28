@@ -17,10 +17,6 @@ FilterDesignerMain::FilterDesignerMain(QWidget *parent)
 
     // Main Application setup
     mainAppSetup();
-
-    // Set up tab-bar stylesheet
-    setTabbarStyleSheet();
-
 }
 
 FilterDesignerMain::~FilterDesignerMain()
@@ -32,6 +28,7 @@ void FilterDesignerMain::mainAppSetup()
 {
     this->setWindowTitle("Filter Designer");
     setDarkUI();
+    setTabbarStyleSheet();
 }
 
 void FilterDesignerMain::setDarkUI()
@@ -109,12 +106,13 @@ void FilterDesignerMain::setTabbarStyleSheet()
 
 void FilterDesignerMain::on_actionNew_Filter_triggered()
 {
-    ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
+    if(ui->main_TabWidget->count() == 0)
+        ui->stackedWidget->setCurrentIndex(1);
 
+    ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
     ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
 
-//    auto p = static_cast<FilterTab*>(ui->main_TabWidget->widget(0));
-//    FilterAnalyzer* a = p->analyzer();
+
 }
 
 void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
@@ -123,11 +121,16 @@ void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
     msgBox.setText("Are you sure you want to close the tab: "  + ui->main_TabWidget->tabText(index) + " ?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Cancel);
+    msgBox.move(this->x()+this->width()/2.0-msgBox.width()/2.0, this->y()+this->height()/2.0-msgBox.height()/2.0);
 
     int ret = msgBox.exec();
 
     if(ret == QMessageBox::Ok)
         delete(ui->main_TabWidget->widget(index));
+
+    if(ui->main_TabWidget->count() == 0)
+        ui->stackedWidget->setCurrentIndex(0);
+
 }
 
 void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
@@ -144,4 +147,12 @@ void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
 void FilterDesignerMain::on_actionExit_triggered()
 {
     this->close();
+}
+
+void FilterDesignerMain::on_newFilter_pushButton_clicked()
+{
+    ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
+    ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
+
+    ui->stackedWidget->setCurrentIndex(1);
 }
