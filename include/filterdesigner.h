@@ -25,12 +25,24 @@ class FilterDesigner : public QWidget
 {
     Q_OBJECT
 
-public:
-    explicit FilterDesigner(QWidget *parent = nullptr);
-    ~FilterDesigner();
+    public:
+        explicit FilterDesigner(QWidget *parent = nullptr);
+        ~FilterDesigner();
 
-private:
-    Ui::FilterDesigner *ui;
+    private slots:
+        void on_window_radioButton_clicked();
+        void on_lpf_radioButton_clicked();
+        void on_hpf_radioButton_clicked();
+        void on_bpf_radioButton_clicked();
+
+
+
+
+    private:
+        void populateMethodCombobox();
+
+    private:
+        Ui::FilterDesigner *ui;
 };
 
 #endif // FILTERDESIGNER_H
