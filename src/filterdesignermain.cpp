@@ -117,11 +117,10 @@ void FilterDesignerMain::on_actionNew_Filter_triggered()
 
 void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
 {
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     msgBox.setText("Are you sure you want to close the tab: "  + ui->main_TabWidget->tabText(index) + " ?");
     msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
     msgBox.setDefaultButton(QMessageBox::Cancel);
-    msgBox.move(this->x()+this->width()/2.0-msgBox.width()/2.0, this->y()+this->height()/2.0-msgBox.height()/2.0);
 
     int ret = msgBox.exec();
 
