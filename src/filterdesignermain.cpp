@@ -144,7 +144,7 @@ bool FilterDesignerMain::eventFilter(QObject *watched, QEvent *event)
     {
         // Hide the uiSettings-widget if we're not clicking directly inside it
         if (!_appSettings->rect().contains(_appSettings->mapFromGlobal(QCursor::pos()))) {
-            hideUISettings();
+            hideAppSettings();
             retval = true;
         }
     }
@@ -155,7 +155,7 @@ bool FilterDesignerMain::eventFilter(QObject *watched, QEvent *event)
 
         if(keyEvent->key() == Qt::Key::Key_Escape)
         {
-            hideUISettings();
+            hideAppSettings();
             retval = true;
         }
     }
@@ -231,7 +231,7 @@ void FilterDesignerMain::on_newFilter_pushButton_clicked()
     ui->stackedWidget->setCurrentIndex(1);
 }
 
-void FilterDesignerMain::showUISettings()
+void FilterDesignerMain::showAppSettings()
 {
     _appSettings->resize(QSize(_appSettings->width(), this->height()));
     _appSettings->show();
@@ -264,7 +264,7 @@ void FilterDesignerMain::showUISettings()
 }
 
 
-void FilterDesignerMain::hideUISettings()
+void FilterDesignerMain::hideAppSettings()
 {
     QPropertyAnimation *animation = new QPropertyAnimation(_appSettings, "geometry");
     animation->setDuration(300);
@@ -283,14 +283,14 @@ void FilterDesignerMain::hideUISettings()
     animation->setEasingCurve(QEasingCurve::InCubic);
     animation->start();
 
-    connect(animation, &QPropertyAnimation::finished, this, &FilterDesignerMain::hideUISettings_slot);
+    connect(animation, &QPropertyAnimation::finished, this, &FilterDesignerMain::hideAppSettings_slot);
 
     ui->centralwidget->setEnabled(true);
     ui->centralwidget->setGraphicsEffect(NULL);
 }
 
 
-void FilterDesignerMain::hideUISettings_slot()
+void FilterDesignerMain::hideAppSettings_slot()
 {
     // Connected to QPropertyAnimation->finished() in hideUISettings
     _appSettings->hide();
@@ -300,7 +300,7 @@ void FilterDesignerMain::hideUISettings_slot()
 void FilterDesignerMain::on_actionSettings_triggered()
 {
     if(_appSettings->isHidden())
-        showUISettings();
+        showAppSettings();
     else
-        hideUISettings();
+        hideAppSettings();
 }

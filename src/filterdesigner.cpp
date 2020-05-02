@@ -32,7 +32,6 @@ void FilterDesigner::populateMethodCombobox()
             items << QString::fromStdString(str);
 
         ui->method_comboBox->addItems(items);
-
     }
 
     else if (ui->lpf_radioButton->isChecked())

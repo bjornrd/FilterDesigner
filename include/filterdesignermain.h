@@ -60,10 +60,10 @@ private slots:
     void on_main_TabWidget_tabBarDoubleClicked(int index);
     void on_actionExit_triggered();
     void on_newFilter_pushButton_clicked();
-
-    void hideUISettings_slot();
-
     void on_actionSettings_triggered();
+
+    void hideAppSettings_slot();
+
 
     private:
     void setDarkUI();
@@ -71,8 +71,8 @@ private slots:
     void setOtherStyleSheet();
     void mainAppSetup();
 
-    void showUISettings();
-    void hideUISettings();
+    void showAppSettings();
+    void hideAppSettings();
 
 private:
     Ui::FilterDesignerMain *ui;
