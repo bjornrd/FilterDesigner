@@ -1,9 +1,9 @@
 /****************************************************************************
- * Copyright (C) 2020 Bjørn Rudi Dahl
+ * Bjørn Rudi Dahl
  *
  * Written by: bjornrd
- * 20/04/2020/4/2020
- * me_brd@hotmail.com
+ * 20/04/2020
+ * bjorn.rudi.dahl@outlook.com
  ****************************************************************************/
 #ifndef WINDOWFIR_H
 #define WINDOWFIR_H
