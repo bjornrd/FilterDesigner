@@ -13,12 +13,11 @@
 #include "filteranalyzer.h"
 #include "filterdesigner.h"
 #include "filtertab.h"
-#include "AppSettings.h"
+#include "appsettings.h"
 
 /*  PRIMARY TO-DO LIST
  *
  * % App Stuff
- * TODO: Settings
  * TODO: AutoSave
  * TODO: Write and Read Settings (Session settings so that the app opens up in previous state)
  * TODO: Save Filter / Window

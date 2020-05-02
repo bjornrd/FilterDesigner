@@ -6,7 +6,7 @@
  * me_brd@hotmail.com
  ****************************************************************************/
 #include "appsettings.h"
-#include "ui_AppSettings.h"
+#include "ui_appsettings.h"
 
 AppSettings::AppSettings(QWidget *parent) :
     QWidget(parent),
