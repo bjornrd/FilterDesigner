@@ -14,6 +14,7 @@ namespace sigproc {
     typedef std::valarray<Complex> CArray;
 
 
+
     /* Fast-Fourier Transform: FFT
      *
      */
@@ -38,6 +39,24 @@ namespace sigproc {
             x[k    ] = even[k] + t;
             x[k+N/2] = even[k] - t;
         }
+    }
+
+    /* N-Point Fast-Fourier Transform: FFT
+     *
+     */
+    static inline CArray fft(CArray& x, int N)
+    {
+        CArray out(Complex(0,0), N);
+
+        int sizeX = x.size();
+        int fftRange = N < sizeX ? N : sizeX;
+
+        for(int i=0; i<fftRange; i++)
+            out[i] = x[i];
+
+        fft(out);
+
+        return out;
     }
 
     /* Inverse Fast-Fourier Transform: IFFT
