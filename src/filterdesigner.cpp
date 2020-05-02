@@ -28,7 +28,7 @@ void FilterDesigner::populateMethodCombobox()
     if(ui->window_radioButton->isChecked())
     {
         QStringList items;
-        for(std::string  str : QVector<std::string>::fromStdVector(WindowTypesLiteral::Types) )
+        for(std::string  str : QVector<std::string>( WindowTypesLiteral::Types.begin(), WindowTypesLiteral::Types.end() ))
             items << QString::fromStdString(str);
 
         ui->method_comboBox->addItems(items);
