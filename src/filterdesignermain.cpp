@@ -189,6 +189,9 @@ void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
         {
             if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
                 _appSettings->setAskOnFilterClose(false);
+
+            } else { // If we check/uncheck the cb, then we need to reset the ask-on-filter-close
+                _appSettings->setAskOnFilterClose(true);
             }
         });
 
