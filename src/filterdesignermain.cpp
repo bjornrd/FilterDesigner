@@ -8,6 +8,7 @@
 FilterDesignerMain::FilterDesignerMain(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::FilterDesignerMain)
+    , _appSettings(new AppSettings(this))
 {
     ui->setupUi(this);
 
@@ -19,17 +20,23 @@ FilterDesignerMain::FilterDesignerMain(QWidget *parent)
     mainAppSetup();
 }
 
+
 FilterDesignerMain::~FilterDesignerMain()
 {
     delete ui;
 }
 
+
 void FilterDesignerMain::mainAppSetup()
 {
     this->setWindowTitle("Filter Designer");
+    this->installEventFilter(this);
+
     setDarkUI();
     setTabbarStyleSheet();
+    setOtherStyleSheet();
 }
+
 
 void FilterDesignerMain::setDarkUI()
 {
@@ -73,6 +80,7 @@ void FilterDesignerMain::setDarkUI()
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
 }
 
+
 void FilterDesignerMain::setTabbarStyleSheet()
 {
     QString tabbarStyleSheet =
@@ -103,6 +111,58 @@ void FilterDesignerMain::setTabbarStyleSheet()
 }
 
 
+void FilterDesignerMain::setOtherStyleSheet()
+{
+    QString pushButtonStyleSheet = "QPushButton{"
+                                            "border: 1px solid red;"
+                                            "min-width: 6em;"
+                                            "min-height: 2em;"
+                                    "}"
+
+                                    "QPushButton:hover {background: #484852;}";
+
+    ui->newFilter_pushButton->setStyleSheet(pushButtonStyleSheet);
+}
+
+
+bool FilterDesignerMain::eventFilter(QObject *watched, QEvent *event)
+{
+    Q_UNUSED(watched);
+
+    bool retval = false;
+    if(event->type() == QEvent::Resize)
+    {
+        if(_appSettings->isVisible())
+        {
+            _appSettings->resize(QSize(_appSettings->width(), this->height()));
+            _appSettings->move(QPoint(this->width()  - _appSettings->width(), 0));
+        }
+        retval = true;
+    }
+
+    if(event->type() == QEvent::MouseButtonPress)
+    {
+        // Hide the uiSettings-widget if we're not clicking directly inside it
+        if (!_appSettings->rect().contains(_appSettings->mapFromGlobal(QCursor::pos()))) {
+            hideUISettings();
+            retval = true;
+        }
+    }
+
+    if(event->type() == QEvent::KeyPress)
+    {
+        auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+
+        if(keyEvent->key() == Qt::Key::Key_Escape)
+        {
+            hideUISettings();
+            retval = true;
+        }
+    }
+
+    return retval;
+}
+
 
 void FilterDesignerMain::on_actionNew_Filter_triggered()
 {
@@ -111,26 +171,40 @@ void FilterDesignerMain::on_actionNew_Filter_triggered()
 
     ui->main_TabWidget->addTab(new FilterTab(this), "Filter " + QString::number(ui->main_TabWidget->count() + 1) );
     ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
-
-
 }
+
 
 void FilterDesignerMain::on_main_TabWidget_tabCloseRequested(int index)
 {
-    QMessageBox msgBox(this);
-    msgBox.setText("Are you sure you want to close the tab: "  + ui->main_TabWidget->tabText(index) + " ?");
-    msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
-    msgBox.setDefaultButton(QMessageBox::Cancel);
+    if(_appSettings->askOnFilterClose())
+    {
+        QCheckBox* cb = new QCheckBox("Don't Show This Again");
+        QMessageBox msgBox(this);
+        msgBox.setText("Are you sure you want to close the tab: "  + ui->main_TabWidget->tabText(index) + " ?");
+        msgBox.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+        msgBox.setDefaultButton(QMessageBox::Cancel);
+        msgBox.setCheckBox(cb);
 
-    int ret = msgBox.exec();
+        QObject::connect(cb, &QCheckBox::stateChanged, [this](int state)
+        {
+            if (static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked) {
+                _appSettings->setAskOnFilterClose(false);
+            }
+        });
 
-    if(ret == QMessageBox::Ok)
+        if(msgBox.exec() == QMessageBox::Ok)
+            delete(ui->main_TabWidget->widget(index));
+
+    } else {
+
         delete(ui->main_TabWidget->widget(index));
+    }
 
     if(ui->main_TabWidget->count() == 0)
         ui->stackedWidget->setCurrentIndex(0);
 
 }
+
 
 void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
 {
@@ -143,6 +217,7 @@ void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
         ui->main_TabWidget->setTabText(index, text);
 }
 
+
 void FilterDesignerMain::on_actionExit_triggered()
 {
     this->close();
@@ -154,4 +229,78 @@ void FilterDesignerMain::on_newFilter_pushButton_clicked()
     ui->main_TabWidget->setCurrentIndex(ui->main_TabWidget->count()-1);
 
     ui->stackedWidget->setCurrentIndex(1);
+}
+
+void FilterDesignerMain::showUISettings()
+{
+    _appSettings->resize(QSize(_appSettings->width(), this->height()));
+    _appSettings->show();
+    _appSettings->raise();
+
+    QPropertyAnimation *animation = new QPropertyAnimation(_appSettings, "geometry");
+    animation->setDuration(300);
+
+    double startX, endX, Y, width, height;
+    startX = this->width();
+    endX   = this->width()  - _appSettings->width();
+    Y      = 0;
+    width  = _appSettings->width();
+    height = _appSettings->height();
+
+    QRect startRect(startX,Y,width,height);
+    QRect endRect(endX,Y,width,height);
+    animation->setStartValue(startRect);
+    animation->setEndValue(endRect);
+    animation->setEasingCurve(QEasingCurve::OutCubic);
+    animation->start(QPropertyAnimation::DeleteWhenStopped);
+
+    ui->centralwidget->setDisabled(true);
+
+    // Blur the tab-widgets when showing the UI-settings
+    QGraphicsBlurEffect* blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurHints(QGraphicsBlurEffect::PerformanceHint);
+    blurEffect->setBlurRadius(5);
+    ui->centralwidget->setGraphicsEffect(blurEffect);
+}
+
+
+void FilterDesignerMain::hideUISettings()
+{
+    QPropertyAnimation *animation = new QPropertyAnimation(_appSettings, "geometry");
+    animation->setDuration(300);
+
+    double startX, endX, Y, width, height;
+    startX = this->width()  - _appSettings->width();
+    endX   = this->width();
+    Y      = 0;
+    width  = _appSettings->width();
+    height = _appSettings->height();
+
+    QRect startRect(startX,Y,width,height);
+    QRect endRect(endX,Y,width,height);
+    animation->setStartValue(startRect);
+    animation->setEndValue(endRect);
+    animation->setEasingCurve(QEasingCurve::InCubic);
+    animation->start();
+
+    connect(animation, &QPropertyAnimation::finished, this, &FilterDesignerMain::hideUISettings_slot);
+
+    ui->centralwidget->setEnabled(true);
+    ui->centralwidget->setGraphicsEffect(NULL);
+}
+
+
+void FilterDesignerMain::hideUISettings_slot()
+{
+    // Connected to QPropertyAnimation->finished() in hideUISettings
+    _appSettings->hide();
+}
+
+
+void FilterDesignerMain::on_actionSettings_triggered()
+{
+    if(_appSettings->isHidden())
+        showUISettings();
+    else
+        hideUISettings();
 }

@@ -4,13 +4,27 @@
 #include <QMainWindow>
 #include <QDockWidget>
 #include <QString>
+#include <QPropertyAnimation>
+#include <QGraphicsEffect>
+#include <QKeyEvent>
+
+#include <QDebug>
 
 #include "filteranalyzer.h"
 #include "filterdesigner.h"
 #include "filtertab.h"
+#include "AppSettings.h"
 
 /*  PRIMARY TO-DO LIST
  *
+ * % App Stuff
+ * TODO: Settings
+ * TODO: AutoSave
+ * TODO: Write and Read Settings (Session settings so that the app opens up in previous state)
+ * TODO: Save Filter / Window
+ * TODO: Load Filter / Window
+ *
+ * % Actual Filter Stuff
  * TODO: List filter types
  * TODO: List filter design methods (equiripple, windowed, least-squared...)
  * TODO: Create window design class [hamming, hann, kaizers, bartlett]
@@ -37,6 +51,10 @@ public:
     FilterDesignerMain(QWidget *parent = nullptr);
     ~FilterDesignerMain();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
+
 private slots:
     void on_actionNew_Filter_triggered();
     void on_main_TabWidget_tabCloseRequested(int index);
@@ -44,12 +62,21 @@ private slots:
     void on_actionExit_triggered();
     void on_newFilter_pushButton_clicked();
 
+    void hideUISettings_slot();
+
+    void on_actionSettings_triggered();
+
     private:
     void setDarkUI();
     void setTabbarStyleSheet();
+    void setOtherStyleSheet();
     void mainAppSetup();
+
+    void showUISettings();
+    void hideUISettings();
 
 private:
     Ui::FilterDesignerMain *ui;
+    AppSettings* _appSettings;
 };
 #endif // FILTERDESIGNERMAIN_H
