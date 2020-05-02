@@ -5,7 +5,7 @@
  * 28/04/2020/4/2020
  * me_brd@hotmail.com
  ****************************************************************************/
-#include "AppSettings.h"
+#include "appsettings.h"
 #include "ui_AppSettings.h"
 
 AppSettings::AppSettings(QWidget *parent) :
