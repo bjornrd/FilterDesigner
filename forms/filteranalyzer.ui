@@ -121,7 +121,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QChartView" name="analysis_chartView"/>
+       <widget class="QChartView" name="analysis_chartView">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

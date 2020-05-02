@@ -14,11 +14,9 @@ FilterAnalyzer::FilterAnalyzer(QWidget *parent) :
     setStyleSheets();
     setUpCharts();
 
-    _filterCoefNum = sigproc::CArray {{ 1.0 , 2.0}, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0 };
+    _filterCoefNum = sigproc::CArray {1.0, 1.0, 1.0, 1.0, -1.0, -1.0, -1.0, -1.0};
 
     ui->analysis_chartView->setChart(_filterCoefChart);
-
-
 
 }
 
@@ -138,14 +136,14 @@ void FilterAnalyzer::on_mag_pushButton_clicked()
     // Just for testing purposes
 
     sigproc::CArray fftData = _filterCoefNum;
-    sigproc::fft(fftData);
+    auto ffted = sigproc::fft(fftData, 1024);
 
     _freqMagVals->clear();
 
     int f=0;
-    for(auto elem:fftData)
+    for(auto elem:ffted)
     {
-        _freqMagVals->append(f, std::sqrt(elem.real()*elem.real() + elem.imag()*elem.imag()));
+        _freqMagVals->append(f, 20.0*std::log10(std::sqrt(elem.real()*elem.real() + elem.imag()*elem.imag())) );
         f++;
     }
 
