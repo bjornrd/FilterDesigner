@@ -35,6 +35,8 @@ void FilterDesignerMain::mainAppSetup()
     setDarkUI();
     setTabbarStyleSheet();
     setOtherStyleSheet();
+
+    readSettings();
 }
 
 
@@ -163,6 +165,57 @@ bool FilterDesignerMain::eventFilter(QObject *watched, QEvent *event)
     return retval;
 }
 
+void FilterDesignerMain::closeEvent(QCloseEvent *event)
+{
+    writeSettings();
+    event->accept();
+}
+
+
+void FilterDesignerMain::readSettings()
+{
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+
+    settings.beginGroup("FilterDesigner");
+    // Geometry
+    const QByteArray geometry = settings.value("FilterDesignerGeometry", QByteArray()).toByteArray();
+
+    if (geometry.isEmpty())
+    {
+        const QRect availableGeometry = QApplication::desktop()->availableGeometry(this);
+        this->resize(availableGeometry.width()/3, availableGeometry.height()/2);
+
+        this->move((availableGeometry.width() - this->width()) / 2,
+                   (availableGeometry.height() - this->height()) / 2);
+
+    } else {
+        this->restoreGeometry(geometry);
+    }
+
+
+    settings.endGroup();
+
+    // Apply any additional settings
+    applySettings();
+}
+
+void FilterDesignerMain::applySettings()
+{
+    // Currently empty until we have something to apply
+}
+
+void FilterDesignerMain::writeSettings()
+{
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+
+    settings.beginGroup("FilterDesigner");
+
+    // Geometry
+    settings.setValue("FilterDesignerGeometry", this->saveGeometry());
+
+    settings.endGroup();
+}
+
 
 void FilterDesignerMain::on_actionNew_Filter_triggered()
 {
@@ -223,6 +276,7 @@ void FilterDesignerMain::on_main_TabWidget_tabBarDoubleClicked(int index)
 
 void FilterDesignerMain::on_actionExit_triggered()
 {
+    writeSettings();
     this->close();
 }
 

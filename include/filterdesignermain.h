@@ -19,7 +19,6 @@
  *
  * % App Stuff
  * TODO: AutoSave (?)
- * TODO: Write and Read Settings (Session settings so that the app opens up in previous state)
  * TODO: Save Filter / Window
  * TODO: Load Filter / Window
  *
@@ -52,7 +51,7 @@ public:
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);
-
+    void closeEvent(QCloseEvent* event);
 
 private slots:
     void on_actionNew_Filter_triggered();
@@ -65,7 +64,11 @@ private slots:
     void hideAppSettings_slot();
 
 
-    private:
+private:
+    void writeSettings();
+    void readSettings();
+    void applySettings();
+
     void setDarkUI();
     void setTabbarStyleSheet();
     void setOtherStyleSheet();
