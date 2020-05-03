@@ -18,7 +18,7 @@
 /*  PRIMARY TO-DO LIST
  *
  * % App Stuff
- * TODO: AutoSave
+ * TODO: AutoSave (?)
  * TODO: Write and Read Settings (Session settings so that the app opens up in previous state)
  * TODO: Save Filter / Window
  * TODO: Load Filter / Window

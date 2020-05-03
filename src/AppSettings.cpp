@@ -7,6 +7,7 @@
  ****************************************************************************/
 #include "appsettings.h"
 #include "ui_appsettings.h"
+#include "version.h"
 
 AppSettings::AppSettings(QWidget *parent) :
     QWidget(parent),
@@ -29,4 +30,16 @@ bool AppSettings::askOnFilterClose() const
 void AppSettings::setAskOnFilterClose(bool askOnFilterClose)
 {
     ui->askOnFilterClose_checkBox->setChecked(askOnFilterClose);
+}
+
+void AppSettings::on_about_pushButton_clicked()
+{
+    QMessageBox::about(nullptr, "About Filter Designer",
+                       "A Qt Application by Bjørn Rudi Dahl\n"
+                       "\n"
+                       "bjorn.rudi.dahl@outlook.com\n"
+                       "\n"
+                       "V" + QString::number(version::major) + "." + QString::number(version::minor) + "." + QString::number(version::dev)
+                       );
+
 }
