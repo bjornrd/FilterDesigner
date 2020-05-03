@@ -134,29 +134,35 @@ void FilterAnalyzer::on_mag_pushButton_clicked()
     //----------------------
     // Add the values we want to the series
     // Just for testing purposes
-
     sigproc::CArray fftData = _filterCoefNum;
     auto ffted = sigproc::fft(fftData, 1024);
 
-    _freqMagVals->clear();
-
-    int f=0;
-    for(auto elem:ffted)
-    {
-        _freqMagVals->append(f, 20.0*std::log10(std::sqrt(elem.real()*elem.real() + elem.imag()*elem.imag())) );
-        f++;
-    }
-
-
-    //----------------------
-
-
     if(_freqMagChart->series().size() == 0)
+    {
+        int f=0;
+        for(auto elem:ffted)
+        {
+            _freqMagVals->append(f, 20.0*std::log10(std::sqrt(elem.real()*elem.real() + elem.imag()*elem.imag())) );
+            f++;
+        }
+
         _freqMagChart->addSeries(_freqMagVals);
 
+    } else {
+
+        std::vector<QPointF> freqMag;
+
+        float f=0.0;
+        for(const auto& elem:ffted)
+        {
+            freqMag.push_back(QPointF(f, 20.0*std::log10(std::sqrt(elem.real()*elem.real() + elem.imag()*elem.imag())) ));
+            ++f;
+        }
+
+        _freqMagVals->replace(QVector<QPointF>(freqMag.begin(), freqMag.end()));
+    }
 
     _freqMagChart->createDefaultAxes();
-
 }
 
 
