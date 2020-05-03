@@ -61,8 +61,6 @@ private slots:
     void on_newFilter_pushButton_clicked();
     void on_actionSettings_triggered();
 
-    void hideAppSettings_slot();
-
 
 private:
     void writeSettings();

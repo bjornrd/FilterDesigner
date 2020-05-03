@@ -340,18 +340,14 @@ void FilterDesignerMain::hideAppSettings()
     animation->setEasingCurve(QEasingCurve::InCubic);
     animation->start();
 
-    connect(animation, &QPropertyAnimation::finished, this, &FilterDesignerMain::hideAppSettings_slot);
+    connect(animation, &QPropertyAnimation::finished, [this](){
+        _appSettings->hide();
+    });
 
     ui->centralwidget->setEnabled(true);
     ui->centralwidget->setGraphicsEffect(NULL);
 }
 
-
-void FilterDesignerMain::hideAppSettings_slot()
-{
-    // Connected to QPropertyAnimation->finished() in hideUISettings
-    _appSettings->hide();
-}
 
 
 void FilterDesignerMain::on_actionSettings_triggered()
