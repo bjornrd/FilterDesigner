@@ -26,6 +26,7 @@ class AppSettings : public QWidget
         // Set/Get
         bool askOnFilterClose() const;
         void setAskOnFilterClose(bool askOnFilterClose);
+        void showAbout();
 
     private slots:
         void on_about_pushButton_clicked();

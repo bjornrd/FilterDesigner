@@ -32,14 +32,18 @@ void AppSettings::setAskOnFilterClose(bool askOnFilterClose)
     ui->askOnFilterClose_checkBox->setChecked(askOnFilterClose);
 }
 
-void AppSettings::on_about_pushButton_clicked()
+void AppSettings::showAbout()
 {
     QMessageBox::about(nullptr, "About Filter Designer",
                        "A Qt Application by Bjørn Rudi Dahl\n"
                        "\n"
                        "bjorn.rudi.dahl@outlook.com\n"
                        "\n"
-                       "V" + QString::number(version::major) + "." + QString::number(version::minor) + "." + QString::number(version::dev)
+                       "Version: " + QString::number(version::major) + "." + QString::number(version::minor) + "." + QString::number(version::dev)
                        );
+}
 
+void AppSettings::on_about_pushButton_clicked()
+{
+    showAbout();
 }

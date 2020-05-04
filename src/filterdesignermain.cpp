@@ -357,3 +357,8 @@ void FilterDesignerMain::on_actionSettings_triggered()
     else
         hideAppSettings();
 }
+
+void FilterDesignerMain::on_actionAbout_triggered()
+{
+    _appSettings->showAbout();
+}
